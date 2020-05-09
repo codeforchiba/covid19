@@ -2,7 +2,7 @@ name: convert
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 14 * * *'
 
 env:
   TZ: Asia/Tokyo
@@ -12,10 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # feature/workflows-convertでテスト
     - uses: actions/checkout@v2
-      with:
-        ref: feature/workflows-convert
 
     - name: Install dependencies
       run: cd tool && composer install --prefer-dist --no-progress --no-suggest && cd ..
@@ -25,14 +22,13 @@ jobs:
  
     - name: Git add & commit
       run: |
-        git config --local user.email ${{secrets.EMAIL}}
-        git config --local user.name ${{secrets.NAME}}
+        git config --local user.email "${{secrets.EMAIL}}"
+        git config --local user.name "${{secrets.NAME}}"
         git status | grep "modified:   data/data.json" && git add data/data.json \
           && git commit -m "update data.json: `date +'%Y-%m-%d %H:%M:%S'`"
 
-    # feature/workflows-convertでテスト
     - name: Git push
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: feature/workflows-convert
+        branch: development
