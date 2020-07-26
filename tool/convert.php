@@ -90,7 +90,7 @@ function readQuerents() : array
     'date' => xlsxToArray(__DIR__.'/downloads/05returnee.xlsx', 'RAW', 'H1')[0][0],
     'data' => $data->filter(function ($row) {
 
-      return $row['曜日'] && $row['17-翌9時'];
+      return $row['曜日'];
     })->map(function ($row) {
       $date = '2020-'.str_replace(['月', '日'], ['-', ''], $row['日付']);
       $carbon = Carbon::parse($date);

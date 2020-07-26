@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import PageHeader from '@/components/PageHeader.vue'
 import TimeBarChart from '@/components/TimeBarChart.vue'
 import MonorailBarChart from '@/components/MonorailBarChart.vue'
@@ -155,7 +156,9 @@ export default {
       lText: patientsGraph[
         patientsGraph.length - 1
       ].cumulative.toLocaleString(),
-      sText: patientsGraph[patientsGraph.length - 1].label + 'の累計',
+      sText:
+        dayjs(patientsGraph[patientsGraph.length - 1].label).format('M/D') +
+        'の累計',
       unit: '人'
     }
 
