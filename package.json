@@ -52,7 +52,7 @@
     "@nuxtjs/eslint-config-typescript": "^1.0.2",
     "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/vuetify": "^1.0.0",
-    "@types/chart.js": "^2.9.14",
+    "@types/chart.js": "^2.9.28",
     "@vue/test-utils": "^1.0.0-beta.27",
     "autoprefixer": "^9.7.4",
     "babel-jest": "^24.1.0",
