@@ -55,7 +55,7 @@
     "@types/chart.js": "^2.9.29",
     "@vue/test-utils": "^1.0.0-beta.27",
     "autoprefixer": "^9.8.6",
-    "babel-jest": "^24.1.0",
+    "babel-jest": "^26.6.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
