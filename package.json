@@ -53,7 +53,7 @@
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/vuetify": "^1.0.0",
     "@types/chart.js": "^2.9.29",
-    "@vue/test-utils": "^1.0.0-beta.27",
+    "@vue/test-utils": "^1.1.2",
     "autoprefixer": "^9.8.6",
     "babel-jest": "^24.1.0",
     "eslint": "^6.8.0",
