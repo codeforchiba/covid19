@@ -33,7 +33,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.3",
     "express": "^4.16.4",
