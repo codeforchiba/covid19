@@ -11623,10 +11623,10 @@ vue-server-renderer@^2.6.11:
     serialize-javascript "^2.1.2"
     source-map "0.5.6"
 
-vue-spinner@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/vue-spinner/-/vue-spinner-1.0.3.tgz#eecd3f79f63a815b690e9d54b199ab65be695499"
-  integrity sha512-Phh6QC/Bh80ZE/0SH9ADw4irbRGwFK6VZsTksPHpPm16xga2OXwNC2nI7SEPnndUZP+Lgu1wu+pbH6i6+5siBQ==
+vue-spinner@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-spinner/-/vue-spinner-1.0.4.tgz#0e794d9d93acb23b5b6564042157a531e7ce413b"
+  integrity sha512-GNG2F+8BLX201JT/jUX+84Gsi3ZteVQwt9K7mues3ts9FcQ95dGn7uu6a5ndSxdYYUEzfh1KngZiOE0u+l4itA==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"

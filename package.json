@@ -42,7 +42,7 @@
     "vue-chartjs": "^3.5.1",
     "vue-property-decorator": "^8.4.0",
     "vue-scrollto": "^2.20.0",
-    "vue-spinner": "^1.0.3",
+    "vue-spinner": "^1.0.4",
     "vuetify": "^2.4.2"
   },
   "devDependencies": {
