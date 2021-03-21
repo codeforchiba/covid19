@@ -65,14 +65,15 @@ function readContacts() : array
       $date = date('Y-m-d', ($row['日付'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
       $row['日付'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-      $row['date'] = $carbon->format('Y-m-d');
-      $row['w'] = $carbon->format('w');
-      $row['short_date'] = $carbon->format('m/d');
       $row['小計'] = array_sum([
         $row['9-13時'] ?? 0,
         $row['13-17時'] ?? 0,
         $row['17-21時'] ?? 0,
       ]);
+      unset($row['曜日']);
+      unset($row['9-13時']);
+      unset($row['13-17時']);
+      unset($row['17-21時']);
       return $row;
     })
   ];
@@ -95,13 +96,13 @@ function readQuerents() : array
       $date = date('Y-m-d', ($row['日付'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
       $row['日付'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-      $row['date'] = $carbon->format('Y-m-d');
-      $row['w'] = $carbon->format('w');
-      $row['short_date'] = $carbon->format('m/d');
       $row['小計'] = array_sum([
         $row['9-17時'] ?? 0,
         $row['17-翌9時'] ?? 0,
       ]);
+      unset($row['曜日']);  
+      unset($row['9-17時']);  
+      unset($row['17-翌9時']);
       return $row;
     })->values()
   ];
@@ -119,9 +120,7 @@ function readPatients() : array
         $date = date('Y-m-d', ($row['リリース日'] - 25569) * 60 * 60 * 24);
         $carbon = Carbon::parse($date);
         $row['リリース日'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-        $row['date'] = $carbon->format('Y-m-d');
-        $row['w'] = $carbon->format('w');
-        $row['short_date'] = $carbon->format('m/d');
+        unset($row['曜日']);
         return $row;
       })
     ];
@@ -156,7 +155,14 @@ function readInspections() : array{
     'data' => $data-> map(function ($row) {
       $date = date('Y-m-d', ($row['判明日'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
-      $row['判明日'] = $carbon->format('m/d/Y'); 
+      $row['判明日'] = $carbon->format('m/d/Y');
+      unset($row['検査検体数']); 
+      unset($row['疑い例検査']); 
+      unset($row['接触者調査']); 
+      unset($row['陰性確認']); 
+      unset($row['チャーター便']); 
+      unset($row['クルーズ船']); 
+      unset($row['陰性確認2']); 
       return $row;
     })    
   ];
