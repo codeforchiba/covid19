@@ -19,12 +19,12 @@ function makeDateArray($begin) : Collection{
 }
 function formatDate(string $date) :string
 {
-    if (preg_match('#(\d+/\d+/\d+)/ (\d+:\d+)#', $date, $matches)) {
-      $carbon = Carbon::parse($matches[1].' '.$matches[2]);
-      return $carbon->format('Y/m/d H:i');
-    } else {
-      throw new Exception('Can not parse date:'.$date);
-    }
+  if (preg_match('#(\d+/\d+/\d+)/ (\d+:\d+)#', $date, $matches)) {
+    $carbon = Carbon::parse($matches[1].' '.$matches[2]);
+    return $carbon->format('Y/m/d H:i');
+  } else {
+    throw new Exception('Can not parse date:'.$date);
+  }
 }
 
 function xlsxToArray(string $path, string $sheet_name, string $range, $header_range = null)
@@ -37,16 +37,15 @@ function xlsxToArray(string $path, string $sheet_name, string $range, $header_ra
     return new Collection($row);
   });
   if ($header_range !== null) {
-      $headers = xlsxToArray($path, $sheet_name, $header_range)[0];
-      // TODO check same columns length
-      return $data->map(function ($row) use($headers){
-          return $row->mapWithKeys(function ($cell, $idx) use($headers){
-
-            return [
-              $headers[$idx] => $cell
-            ];
-        });
+    $headers = xlsxToArray($path, $sheet_name, $header_range)[0];
+    // TODO check same columns length
+    return $data->map(function ($row) use($headers){
+      return $row->mapWithKeys(function ($cell, $idx) use($headers){
+        return [
+          $headers[$idx] => $cell
+        ];
       });
+    });
   }
 
   return $data;
@@ -56,25 +55,22 @@ function xlsxToArray(string $path, string $sheet_name, string $range, $header_ra
 function readContacts() : array
 {
 
-  $data = xlsxToArray(__DIR__.'/downloads/04callcenter.xlsx', 'Sheet1', 'A2:E365', 'A1:E1');
+  $data = xlsxToArray(__DIR__.'/downloads/04callcenter.xlsx', 'Sheet1', 'A2:E999', 'A1:E1');
   return [
     'date' => xlsxToArray(__DIR__.'/downloads/04callcenter.xlsx', 'Sheet1', 'H1')[0][0],
     'data' => $data->filter(function ($row) {
-        return $row['曜日'] && $row['17-21時'];
-      })->map(function ($row) {
+      return $row['曜日'] && $row['17-21時'];
+    })->map(function ($row) {
       $date = date('Y-m-d', ($row['日付'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
-      $row['日付'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-      $row['小計'] = array_sum([
-        $row['9-13時'] ?? 0,
-        $row['13-17時'] ?? 0,
-        $row['17-21時'] ?? 0,
-      ]);
-      unset($row['曜日']);
-      unset($row['9-13時']);
-      unset($row['13-17時']);
-      unset($row['17-21時']);
-      return $row;
+      return array(
+        '日付' => $carbon->format('Y-m-d').'T08:00:00.000Z',
+        '小計' => array_sum([
+          $row['9-13時'] ?? 0,
+          $row['13-17時'] ?? 0,
+          $row['17-21時'] ?? 0,
+        ])
+      );
     })
   ];
 }
@@ -85,45 +81,42 @@ function readContacts() : array
  */
 function readQuerents() : array
 {
-  $data = xlsxToArray(__DIR__.'/downloads/05returnee.xlsx', 'RAW', 'A2:D365', 'A1:D1');
+  $data = xlsxToArray(__DIR__.'/downloads/05returnee.xlsx', 'RAW', 'A2:D999', 'A1:D1');
 
   return [
     'date' => xlsxToArray(__DIR__.'/downloads/05returnee.xlsx', 'RAW', 'H1')[0][0],
     'data' => $data->filter(function ($row) {
-
       return $row['曜日'] && $row['17-翌9時'];
     })->map(function ($row) {
       $date = date('Y-m-d', ($row['日付'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
-      $row['日付'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-      $row['小計'] = array_sum([
-        $row['9-17時'] ?? 0,
-        $row['17-翌9時'] ?? 0,
-      ]);
-      unset($row['曜日']);  
-      unset($row['9-17時']);  
-      unset($row['17-翌9時']);
-      return $row;
+      return array(
+        '日付' => $carbon->format('Y-m-d').'T08:00:00.000Z',
+        '小計' => array_sum([
+          $row['9-17時'] ?? 0,
+          $row['17-翌9時'] ?? 0,
+        ])
+      );
     })->values()
   ];
 }
 
 function readPatients() : array
 {
-    $data = xlsxToArray(__DIR__.'/downloads/01patient.xlsx', 'RAW', 'A2:E9999', 'A1:E1');
+  $data = xlsxToArray(__DIR__.'/downloads/01patient.xlsx', 'RAW', 'A2:E49999', 'A1:E1');
 
-    return [
-      'date' => xlsxToArray(__DIR__.'/downloads/01patient.xlsx', 'RAW', 'M1')[0][0],
-      'data' => $data->filter(function ($row) {
-        return $row['リリース日'];
-      })->map(function ($row) {
-        $date = date('Y-m-d', ($row['リリース日'] - 25569) * 60 * 60 * 24);
-        $carbon = Carbon::parse($date);
-        $row['リリース日'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
-        unset($row['曜日']);
-        return $row;
-      })
-    ];
+  return [
+    'date' => xlsxToArray(__DIR__.'/downloads/01patient.xlsx', 'RAW', 'M1')[0][0],
+    'data' => $data->filter(function ($row) {
+      return $row['リリース日'];
+    })->map(function ($row) {
+      $date = date('Y-m-d', ($row['リリース日'] - 25569) * 60 * 60 * 24);
+      $carbon = Carbon::parse($date);
+      $row['リリース日'] = $carbon->format('Y-m-d').'T08:00:00.000Z';
+      unset($row['曜日']);
+      return $row;
+    })
+  ];
 }
 
 function createSummary(array $patients) {
@@ -146,7 +139,7 @@ function createSummary(array $patients) {
 }
 
 function readInspections() : array{
-  $data = xlsxToArray(__DIR__.'/downloads/03inspection.xlsx', '入力シート', 'A2:J365', 'A1:J1');
+  $data = xlsxToArray(__DIR__.'/downloads/03inspection.xlsx', '入力シート', 'A2:J999', 'A1:J1');
   $data = $data->filter(function ($row) {
     return $row['疑い例検査'] !== null;
   });
@@ -155,33 +148,11 @@ function readInspections() : array{
     'data' => $data-> map(function ($row) {
       $date = date('Y-m-d', ($row['判明日'] - 25569) * 60 * 60 * 24);
       $carbon = Carbon::parse($date);
-      $row['判明日'] = $carbon->format('m/d/Y');
-      unset($row['検査検体数']); 
-      unset($row['疑い例検査']); 
-      unset($row['接触者調査']); 
-      unset($row['陰性確認']); 
-      unset($row['チャーター便']); 
-      unset($row['クルーズ船']); 
-      unset($row['陰性確認2']); 
-      return $row;
-    })    
-  ];
-}
-
-function readInspectionsSummary(array $inspections) : array
-{
-  return [
-    'date' => $inspections['date'],
-    'data' => [
-      '市内' => $inspections['data']->map(function ($row) {
-        return str_replace(' ', '', $row['（小計①）']);
-      }),
-      'その他' => $inspections['data']->map(function ($row) {
-        return str_replace(' ', '', $row['（小計②）']);
-      }),
-    ],
-    'labels' =>$inspections['data']->map(function ($row) {
-        return Carbon::parse($row['判明日'])->format('n/j');
+      return array(
+        '判明日' => $carbon->format('m/d/Y'),
+        '市内' => $row['（小計①）'],
+        'その他' => $row['（小計②）']
+      );
     })
   ];
 }
@@ -199,15 +170,13 @@ $querents = readQuerents();
 $patients = readPatients();
 $patients_summary = createSummary($patients);
 $inspections =readInspections();
-$inspections_summary =readInspectionsSummary($inspections);
 
 $data = compact([
   'contacts',
   'querents',
   'patients',
   'patients_summary',
-  'inspections',
-  'inspections_summary'
+  'inspections'
 ]);
 $lastUpdate = '';
 $lastTime = 0;
@@ -255,7 +224,6 @@ $data['main_summary'] = [
           'attr' => '死亡',
           'value' => xlsxToArray(__DIR__.'/downloads/02summary.xlsx', '検査実施サマリ', 'A17')[0][0]
         ]
-
       ]
     ]
   ]

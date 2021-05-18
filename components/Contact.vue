@@ -60,6 +60,50 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-card outlined>
+            <v-card-title>千葉市コロナワクチン接種コールセンター</v-card-title>
+            <v-list three-line>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-phone</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="wrap text-h5 text-md-h4">
+                    0120-57-8970
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    受付時間 8:30 〜 18:00(土・日・祝日含む、年末年始は除く)
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-fax</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="wrap text-h5">
+                    043-245-5128
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    聴覚に障害のある方や、電話での相談が難しい方
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-at</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title class="wrap text-subtitle-2 text-md-h5">
+                    cv-call@city.chiba.lg.jp
+                  </v-list-item-title>
+                  <v-list-item-subtitle>メールはこちら</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-card outlined>
             <v-card-title>千葉県発熱相談コールセンター</v-card-title>
             <v-list three-line>
               <v-list-item>

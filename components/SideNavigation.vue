@@ -26,16 +26,24 @@
       >
         mdi-close
       </v-icon>
-      <v-list :flat="true">
-        <v-container
+      <v-list :flat="true" class="mx-4">
+        <template
           v-for="(item, i) in items"
-          :key="i"
           class="SideNavigation-ListItemContainer"
-          @click="closeNavi"
         >
-          <ListItem :link="item.link" :icon="item.icon" :title="item.title" />
-          <v-divider v-show="item.divider" class="SideNavigation-Divider" />
-        </v-container>
+          <ListItem
+            :key="i"
+            :link="item.link"
+            :icon="item.icon"
+            :title="item.title"
+          />
+          <v-divider
+            v-show="item.divider"
+            :key="i"
+            class="SideNavigation-Divider"
+          />
+        </template>
+        <FeedbackListItem />
       </v-list>
       <div class="SideNavigation-Footer">
         <div class="SideNavigation-SocialLinkContainer">
@@ -62,36 +70,14 @@
   </div>
 </template>
 
-<i18n>
-{
-  "ja": {
-    "Navi Open": "サイドメニュー項目を開く",
-    "Navi Close": "サイドメニュー項目を閉じる",
-    "Chiba": "千葉市",
-    "COVID-19": "新型コロナウイルス感染症",
-    "Measures site": "対策サイト",
-    "The latest updates": "千葉市内の最新感染動向",
-    "If you have any symptoms": "新型コロナウイルス感染症が心配なときに",
-    "All we have to do to prevent infection is simple.": "感染予防のためにできること",
-    "Support with takeout": "テイクアウトで応援！",
-    "for Families with children": "お子様をお持ちの皆様へ",
-    "for Citizens": "市民の皆様へ",
-    "for Enterprises and Employees": "企業の皆様・はたらく皆様へ",
-    "Twitter by mayor kumagai": "熊谷市長 Twitter",
-    "Twitter by Chiba PR": "千葉市広報広聴課 Twitter",
-    "Government special website": "千葉市特設ページ",
-    "About us": "当サイトについて",
-    "Chiba pref edition": "千葉県版コロナ対策サイト"
-  }
-}
-</i18n>
-
 <script>
+import FeedbackListItem from '@/components/FeedbackListItem'
 import ListItem from '@/components/ListItem'
 
 export default {
   components: {
     ListItem,
+    FeedbackListItem,
   },
   props: {
     isNaviOpen: {
@@ -119,14 +105,9 @@ export default {
           divider: true,
         },
         {
+          icon: 'mdi-web',
           title: this.$t('Government special website'),
-          link:
-            'https://www.city.chiba.jp/hokenfukushi/iryoeisei/seisaku/kansensyoujyouhou.html',
-        },
-        {
-          icon: 'mdi-twitter',
-          title: this.$t('Twitter by mayor kumagai'),
-          link: 'https://twitter.com/kumagai_chiba',
+          link: 'https://www.city.chiba.jp/hokenfukushi/iryoeisei/seisaku/kansensyoujyouhou.html',
         },
         {
           icon: 'mdi-twitter',
@@ -134,12 +115,14 @@ export default {
           link: 'https://twitter.com/Chiba_city_PR',
         },
         {
-          title: this.$t('About us'),
-          link: '/about',
+          icon: 'mdi-needle',
+          title: this.$t('V-sys MHLW'),
+          link: 'https://v-sys.mhlw.go.jp/search/list.html?id=121002',
         },
         {
-          title: this.$t('Chiba pref edition'),
-          link: 'https://covid19.civictech.chiba.jp/',
+          icon: 'mdi-information-outline',
+          title: this.$t('About us'),
+          link: '/about',
           divider: true,
         },
       ]

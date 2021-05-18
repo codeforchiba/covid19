@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 type DataType = {
   日付: Date
   小計: number
@@ -11,21 +13,21 @@ type GraphDataType = {
 
 export default (data: DataType[]) => {
   const graphData: GraphDataType[] = []
-  const today = new Date()
+  const now = dayjs()
+  const twoMonthAgo = now.subtract(2, 'month')
   let patSum = 0
   data
-    .filter((d) => new Date(d['日付']) < today)
+    .filter((d) => dayjs(d['日付']) < now)
     .forEach((d) => {
-      const date = new Date(d['日付'])
       const subTotal = d['小計']
       if (!isNaN(subTotal)) {
         patSum += subTotal
         graphData.push({
-          label: `${date.getMonth() + 1}/${date.getDate()}`,
+          label: dayjs(d['日付']).format('YYYY/MM/DD'),
           transition: subTotal,
           cumulative: patSum,
         })
       }
     })
-  return graphData
+  return graphData.filter((d) => dayjs(d.label) >= twoMonthAgo)
 }

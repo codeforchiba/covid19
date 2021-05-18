@@ -1,4 +1,6 @@
 import { Configuration } from '@nuxt/types'
+
+import i18n from './nuxt-i18n.config'
 const purgecss = require('@fullhuman/postcss-purgecss')
 const autoprefixer = require('autoprefixer')
 
@@ -81,7 +83,10 @@ const config: Configuration = {
   /*
    ** Global CSS
    */
-  css: ['~assets/global.scss'],
+  css: [
+    '~assets/global.scss',
+    '~node_modules/@typeform/embed/build/css/popup.css',
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -108,24 +113,7 @@ const config: Configuration = {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    [
-      'nuxt-i18n',
-      {
-        strategy: 'no_prefix',
-        locales: [
-          {
-            code: 'ja',
-            iso: 'ja-JP',
-          },
-        ],
-        defaultLocale: 'ja',
-        vueI18n: {
-          fallbackLocale: 'ja',
-          formatFallbackMessages: true,
-        },
-        vueI18nLoader: true,
-      },
-    ],
+    ['nuxt-i18n', i18n],
     'nuxt-svg-loader',
     'nuxt-purgecss',
     ['vue-scrollto/nuxt', { duration: 1000, offset: -72 }],
@@ -160,8 +148,8 @@ const config: Configuration = {
             './node_modules/vuetify/dist/vuetify.js',
             './node_modules/vue-spinner/src/ScaleLoader.vue',
           ],
-          whitelist: ['html', 'body', 'nuxt-progress', 'DataCard'],
-          whitelistPatterns: [/(col|row)/],
+          whitelist: ['html', 'body', 'iframe', 'nuxt-progress', 'DataCard'],
+          whitelistPatterns: [/(col|row|typeform)/],
         }),
       ],
     },
