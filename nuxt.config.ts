@@ -5,7 +5,7 @@ const purgecss = require('@fullhuman/postcss-purgecss')
 const autoprefixer = require('autoprefixer')
 
 const config: Configuration = {
-  mode: 'universal',
+  target: 'static',
   /*
    ** Headers of the page
    */

@@ -1,4 +1,4 @@
-import type { NuxtVueI18n } from 'nuxt-i18n'
+import type { NuxtVueI18n } from 'nuxt-i18n/types'
 
 const options: NuxtVueI18n.Options.AllOptionsInterface = {
   strategy: 'no_prefix',

@@ -39,7 +39,7 @@
           />
           <v-divider
             v-show="item.divider"
-            :key="i"
+            :key="'D' + i"
             class="SideNavigation-Divider"
           />
         </template>

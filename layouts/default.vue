@@ -55,7 +55,7 @@ export default Vue.extend({
     },
   },
   head(): MetaInfo {
-    const { htmlAttrs } = this.$nuxtI18nSeo()
+    const { htmlAttrs } = this.$nuxtI18nHead()
     return {
       htmlAttrs,
       link: [
