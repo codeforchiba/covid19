@@ -52,7 +52,7 @@
     "@nuxt/typescript-build": "^0.6.0",
     "@nuxtjs/eslint-config-typescript": "^1.0.2",
     "@nuxtjs/google-analytics": "^2.4.0",
-    "@nuxtjs/vuetify": "^1.0.0",
+    "@nuxtjs/vuetify": "^1.11.3",
     "@types/chart.js": "^2.9.29",
     "@vue/test-utils": "^1.0.0-beta.27",
     "autoprefixer": "^9.8.6",
