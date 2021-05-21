@@ -158,9 +158,8 @@ export default {
     const confirmedCases = formatConfirmedCases(Data.main_summary)
 
     const sumInfoOfPatients = {
-      lText: patientsGraph[
-        patientsGraph.length - 1
-      ].cumulative.toLocaleString(),
+      lText:
+        patientsGraph[patientsGraph.length - 1].cumulative.toLocaleString(),
       sText: patientsGraph[patientsGraph.length - 1].label + ' の累計',
       unit: '人',
     }

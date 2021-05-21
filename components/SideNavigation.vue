@@ -39,7 +39,7 @@
           />
           <v-divider
             v-show="item.divider"
-            :key="i"
+            :key="'D' + i"
             class="SideNavigation-Divider"
           />
         </template>
@@ -107,8 +107,7 @@ export default {
         {
           icon: 'mdi-web',
           title: this.$t('Government special website'),
-          link:
-            'https://www.city.chiba.jp/hokenfukushi/iryoeisei/seisaku/kansensyoujyouhou.html',
+          link: 'https://www.city.chiba.jp/hokenfukushi/iryoeisei/seisaku/kansensyoujyouhou.html',
         },
         {
           icon: 'mdi-twitter',

@@ -95,9 +95,8 @@ export default {
         }
       }
       return {
-        lText: this.chartData[
-          this.chartData.length - 1
-        ].cumulative.toLocaleString(),
+        lText:
+          this.chartData[this.chartData.length - 1].cumulative.toLocaleString(),
         sText: `${this.chartData.slice(-1)[0].label} 累計値（前日比：${
           this.displayCumulativeRatio
         } ${this.unit}）`,
