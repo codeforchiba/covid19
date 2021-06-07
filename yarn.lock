@@ -1649,10 +1649,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@typeform/embed@^1.1.1":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@typeform/embed/-/embed-1.5.0.tgz#27322e0a13db758e1142bb09638670849ba601da"
-  integrity sha512-O+6NetnINkBQasdhdz7RbolCn7YTacViL7JjvYW12qcnqNkH3rUpNVV9GtJ0H1iI6+cVp4luMXU8w3f6HIcyfg==
+"@typeform/embed@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/@typeform/embed/-/embed-1.9.0.tgz#f56309ee382ac4c32875ea398337398dfd6fbcbc"
+  integrity sha512-IcCOngCFe3mQ7I5KZis3hv2l7BgCHfgnacoaaNros9yh6Ii6i5BSnagDOXN/kTOv7+Efep4TDAX6SqCmJxl+aw==
 
 "@types/anymatch@*":
   version "1.3.1"
