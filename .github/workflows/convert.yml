@@ -44,6 +44,12 @@ jobs:
         branch: feature/update-data
         labels: automerge
 
+    - name: Auto Approve
+      uses: hmarr/auto-approve-action@v2
+      if: github.actor == 'dependabot[bot]'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Auto Merge
       uses: pascalgn/automerge-action@v0.14.2
       env:
