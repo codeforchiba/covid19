@@ -1,8 +1,9 @@
 name: Renew monorail data
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 14 * * *'
+  - cron: '00 14 * * *'
 
 env:
   TZ: Asia/Tokyo
@@ -10,6 +11,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
 
@@ -20,7 +22,7 @@ jobs:
           architecture: x64
 
       - name: Setup Jupyter lab    
-        run: pip install -r tool/requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Convert    
         run: cd tool && jupyter nbconvert --to notebook --execute --inplace make_monorail_json.ipynb && mv monorail.json ../data && cd ..
@@ -31,7 +33,7 @@ jobs:
         run: |
           git config --local user.email "${{ secrets.EMAIL }}"
           git config --local user.name "${{ secrets.NAME }}"
-          git status | grep "modified:   data/monorail.json" && git add data/monorail.json \
+          git status | grep "monorail.json" && git add data/monorail.json \
             && git commit -m "update monorail.json: `date +'%Y-%m-%d %H:%M:%S'`"
           git checkout .
           git clean -f
@@ -47,6 +49,12 @@ jobs:
           title: monorailデータの反映(${{ steps.update_data.outputs.date }})
           branch: feature/update-monorail-data
           labels: automerge
+
+      - name: Auto Approve
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.PAT }}
+          pull-request-number: ${{ env.PULL_REQUEST_NUMBER }}
 
       - name: Auto Merge
         uses: pascalgn/automerge-action@v0.14.2
