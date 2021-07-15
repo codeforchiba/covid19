@@ -2,7 +2,7 @@ name: Renew data
 
 on:
   schedule:
-    - cron: '0 14 * * *'
+    - cron: '30 14 * * *'
 
 env:
   TZ: Asia/Tokyo
@@ -10,6 +10,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - uses: actions/checkout@v2
@@ -30,6 +31,8 @@ jobs:
         git config --local user.name "${{ secrets.NAME }}"
         git status | grep "modified:   data/data.json" && git add data/data.json \
           && git commit -m "update data.json: `date +'%Y-%m-%d %H:%M:%S'`"
+        git checkout .
+        git clean -f
 
     - name: Set variables
       id: update_data
@@ -46,9 +49,9 @@ jobs:
 
     - name: Auto Approve
       uses: hmarr/auto-approve-action@v2
-      if: github.actor == 'dependabot[bot]'
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.PAT }}
+        pull-request-number: ${{ env.PULL_REQUEST_NUMBER }}
 
     - name: Auto Merge
       uses: pascalgn/automerge-action@v0.14.2
