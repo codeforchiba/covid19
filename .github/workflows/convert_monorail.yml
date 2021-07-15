@@ -61,6 +61,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
+          MERGE_RETRIES: "10"
+          MERGE_RETRY_SLEEP: "60000"
 
       - name: Notify to slack
         uses: 8398a7/action-slack@v3
