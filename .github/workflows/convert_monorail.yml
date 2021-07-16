@@ -1,0 +1,76 @@
+name: Renew monorail data
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '00 14 * * *'
+
+env:
+  TZ: Asia/Tokyo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.6.9'
+          architecture: x64
+
+      - name: Setup Jupyter lab    
+        run: pip install -r requirements.txt
+
+      - name: Convert    
+        run: cd tool && jupyter nbconvert --to notebook --execute --inplace make_monorail_json.ipynb && mv monorail.json ../data && cd ..
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+
+      - name: Git add & commit
+        run: |
+          git config --local user.email "${{ secrets.EMAIL }}"
+          git config --local user.name "${{ secrets.NAME }}"
+          git status | grep "monorail.json" && git add data/monorail.json \
+            && git commit -m "update monorail.json: `date +'%Y-%m-%d %H:%M:%S'`"
+          git checkout .
+          git clean -f
+
+      - name: Set variables
+        id: update_data
+        run: |
+          date=$(date +'%m/%d')
+          echo "::set-output name=date::$date"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: monorailデータの反映(${{ steps.update_data.outputs.date }})
+          branch: feature/update-monorail-data
+          labels: automerge
+
+      - name: Auto Approve
+        uses: hmarr/auto-approve-action@v2
+        with:
+          github-token: ${{ secrets.PAT }}
+          pull-request-number: ${{ env.PULL_REQUEST_NUMBER }}
+
+      - name: Auto Merge
+        uses: pascalgn/automerge-action@v0.14.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_DELETE_BRANCH: true
+          MERGE_RETRIES: "10"
+          MERGE_RETRY_SLEEP: "60000"
+
+      - name: Notify to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Renew Monorail Data
+          fields: repo,commit,action,ref,author,workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ failure() }}
